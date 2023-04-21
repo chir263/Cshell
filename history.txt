@@ -1,0 +1,48 @@
+ls osn/
+
+cd osn/
+
+ls 
+
+ls ASSIGNMENT/
+
+cd ASSIGNMENT/ASSIGNMENT_2/
+
+ls
+
+cd ASSIGNMENT2/
+
+LS
+
+ls
+
+cd c
+
+cd commands.
+
+exit
+
+ls
+
+
+cd e
+
+
+cd ..
+
+
+ls
+
+
+cd ..
+
+
+ls
+
+
+cd science2/
+
+
+exit
+
+
