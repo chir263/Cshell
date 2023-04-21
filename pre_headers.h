@@ -14,25 +14,15 @@
 #include "shellPrompt.h"
 #include "commands.h"
 #include <time.h>
-#include <termios.h>
-#include <ctype.h>
-// #include <conio.h>
-
-// #include <curses.h>
-// #include <conio.h>
 #define ll long long
 
 #define BACK 12
 #define FORE 11
-int ctrlc_fore;
+
 char *HOME;
 char *username;
 char system_name[1024];
 char *curr_dir;
-pid_t TERMINAL_ID, FG_ID;
+pid_t TERMINAL_ID, CHILD_ID;
 char *prev_dir;
 char *his_file_name;
-int autocomplete_print;
-char autocomplete_str[1024];
-char autocomplete_dir[1024];
-char autocomplete_nxt[1024];

@@ -12,29 +12,27 @@ char **init_string_arr(int size)
     return str;
 }
 
-// void trim(char *string)
-// {
-//     int len = strlen(string);
-//     int size = 0;
-//     for (int i = 0; i < len; i++)
-//     {
-//         switch (string[i])
-//         {
-//         case '\n':
-//         case ' ':
-//         case '\t':
-//             break;
-//         default:
-//             string[size++] = string[i];
-//         }
-//     }
-//     string[size] = '\0';
-// }
-char **chunks;
-void execute_command(char *command, int type)
+void trim(char *string)
 {
-    char temp_command[1024];
-    strcpy(temp_command, command);
+    int len = strlen(string);
+    int size = 0;
+    for (int i = 0; i < len; i++)
+    {
+        switch (string[i])
+        {
+        case '\n':
+        case ' ':
+        case '\t':
+            break;
+        default:
+            string[size++] = string[i];
+        }
+    }
+    string[size] = '\0';
+}
+char **chunks;
+void execute_command(char *command)
+{
     // char *local_command = (char *)malloc(sizeof(char) * 1500);
     // strcpy(local_command, command);
     // trim(local_command);
@@ -65,93 +63,56 @@ void execute_command(char *command, int type)
         // }
 
         // trim(command);
-        char comm2[1024];
-        strcpy(comm2, command);
-
-        if (strstr(command, "|") != NULL)
-        {
-            piping(command);
-            return;
-        }
-
-        char *r1 = strstr(comm2, ">");
-        char *r2 = strstr(comm2, "<");
-
-        if (!((r1 == NULL) && (r2 == NULL)))
-        {
-            redirection(command);
-            return;
-        }
-
         command = strtok(command, "\r\n\t ");
         if (command)
         {
             // printf("%s\n", command);
             int cl_size = strlen(chunks[chunk_num - 1]);
             chunks[chunk_num] = NULL;
-            if (!strcmp(chunks[chunk_num - 1], "&") && type)
+            if (!strcmp(chunks[chunk_num - 1], "&"))
             {
                 chunks[chunk_num - 1] = NULL;
-                execute(temp_command, chunks, chunk_num, BACK);
+                execute(chunks, chunk_num, BACK);
                 // printf("back\n");
             }
-            else if (chunks[chunk_num - 1][cl_size - 1] == '&' && type)
+            else if (chunks[chunk_num - 1][cl_size - 1] == '&')
             {
                 chunks[chunk_num - 1][cl_size - 1] = '\0';
-                execute(temp_command, chunks, chunk_num, BACK);
+                execute(chunks, chunk_num, BACK);
                 // printf("back\n");
             }
-            else if (!strcmp(command, "pwd") && type && !ctrlc_fore)
+            else if (!strcmp(command, "pwd"))
                 pwd();
-            else if (!strcmp(command, "echo") && type && !ctrlc_fore)
+            else if (!strcmp(command, "echo"))
                 echo(command);
-            else if (!strcmp(command, "cd") && type && !ctrlc_fore)
+            else if (!strcmp(command, "cd"))
             {
                 cd(command);
 
                 // getcwd(curr_dir, sizeof(curr_dir));
                 // printf("cd() -> %s\n", curr_dir);
             }
-            else if (!strcmp(command, "ls") && type && !ctrlc_fore)
+            else if (!strcmp(command, "ls"))
                 ls(command);
-            else if (!strcmp(command, "pinfo") && !ctrlc_fore)
+            else if (!strcmp(command, "pinfo"))
                 pinfo(command);
-            else if (!strcmp(command, "history") && type && !ctrlc_fore)
+            else if (!strcmp(command, "history"))
                 history(command);
-            else if (!strcmp(command, "exit") && type && !ctrlc_fore)
+            else if (!strcmp(command, "exit"))
             {
                 // add_history();
                 exit(0);
             }
-            else if (!strcmp(command, "clear") && type && !ctrlc_fore)
+            else if (!strcmp(command, "clear"))
             {
                 printf("\e[1;1H\e[2J");
             }
-            else if (!strcmp(command, "discover") && !ctrlc_fore)
+            else if (!strcmp(command, "discover"))
             {
                 discover(command);
             }
-            else if (!strcmp(command, "jobs") && !ctrlc_fore)
-            {
-                print_jobs(command);
-            }
-            else if (!strcmp(command, "sig") && !ctrlc_fore)
-            {
-                sig(command);
-            }
-            else if (!strcmp(command, "fg") && !ctrlc_fore)
-            {
-                fg(command);
-            }
-            else if (!strcmp(command, "bg") && !ctrlc_fore)
-            {
-                bg(command);
-            }
-            else if (!ctrlc_fore)
-            {
-                // printf("%d \n", ctrlc_fore);
-                execute(temp_command, chunks, chunk_num, FORE);
-            }
+            else
+                execute(chunks, chunk_num, FORE);
         }
         free(local_command2);
         // free(command);

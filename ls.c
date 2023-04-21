@@ -65,14 +65,14 @@ void util_ls(char *file_path)
             sprintf(abs_path, "%s/%s", file_path, list_files[i]->d_name);
             struct stat st;
             stat(abs_path, &st);
-            if (a_ || (!a_ && !((list_files[i]->d_name)[0] == '.')))
+            if (a_ || !a_ && !((list_files[i]->d_name)[0] == '.'))
                 block += (st.st_blocks >> 1);
         }
         printf("total - %d\n", block);
         block = 0;
         for (int i = 0; i < num_of_files; i++)
         {
-            if (a_ || (!a_ && !((list_files[i]->d_name)[0] == '.')))
+            if (a_ || !a_ && !((list_files[i]->d_name)[0] == '.'))
                 l_info(file_path, list_files[i]->d_name);
             free(list_files[i]);
         }
@@ -84,7 +84,7 @@ void util_ls(char *file_path)
         // printf("n -> %s\n", file_path);
         for (int i = 0; i < num_of_files; i++)
         {
-            if (a_ || (!a_ && !((list_files[i]->d_name)[0] == '.')))
+            if (a_ || !a_ && !((list_files[i]->d_name)[0] == '.'))
             {
                 // if ()
                 char abs_path[1024];

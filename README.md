@@ -1,6 +1,6 @@
 # C- Shell
 
-> Chirag Jain
+> Chirag Jain (2021101100)
 
 > A user-deﬁned interactive shell program that can create and manage new processes.
 > The shell is able to create a process out of a system program like emacs, gedit, or any user-deﬁned executable.
@@ -60,33 +60,3 @@ discover <target_dir> <type_flags> <file_name>
 ### Speciﬁcation 8
 
 > ‘history’ command which is similar to the actual history command
-
-### Speciﬁcation 9
-
-> Using the symbols <, > and >>, the output of commands, usually written to stdout, can be redirected to another file, or the input taken from a file other than stdin. Both input and output redirection can be used simultaneously. Shell support this functionality
-
-### Speciﬁcation 10
-
-> A pipe, identified by |, redirects the output of the command on the left as input to the command on the right. One or more commands can be piped.
-
-### Speciﬁcation 11
-
-> User-defined Commands
-
-### Speciﬁcation 12
-
-> Input/output redirection can occur within command pipelines.
-
-### Speciﬁcation 13
-
-> The tab key can be pressed at any time of your prompt. When you press the tab key, it will print all files which have the same starting letters as the ls command and then again show the same prompt. If there is only one file/folder which has the same starting characters, the prompt should be filled with that. If it's a file, a space should be placed after the file. If it’s a folder, a ‘/’ should be put after the folder name.
-
-### Speciﬁcation 14
-
-> Signal Handling
->
-> 1. CTRL-Z It should push any currently running foreground job into the background, and change its state from
->    ‘running’ to ‘stopped.’ This should have no effect on the shell if there is no foreground process running.
-> 2. CTRL-C It should interrupt any currently running foreground job, by sending it the SIGINT signal. This should
->    have no effect on the shell if there is no foreground process running.
-> 3. CTRL-D It should log you out of your shell, without having any effect on the actual terminal.

@@ -1,6 +1,6 @@
 #include "pre_headers.h"
 
-void execute(char *temp_command, char **chunks, int chunk_num, int type)
+void execute(char **chunks, int chunk_num, int type)
 {
     // printf("into it\n");
     // for (int i = 0; i < chunk_num; i++)
@@ -21,7 +21,6 @@ void execute(char *temp_command, char **chunks, int chunk_num, int type)
 
         // printf("%s\n", chunks[0]);
         // int x = execvp(chunks[0], chunks);
-        setpgid(0, 0);
         if (type == BACK)
         {
             setpgrp();
@@ -36,37 +35,18 @@ void execute(char *temp_command, char **chunks, int chunk_num, int type)
         {
             int status;
             foreground_bool = 1;
-            FG_ID = pid;
-
-            signal(SIGTTIN, SIG_IGN);
-            signal(SIGTTOU, SIG_IGN);
-            tcsetpgrp(STDIN_FILENO, pid);
-
             waitpid(pid, &status, WUNTRACED);
-
-            tcsetpgrp(STDIN_FILENO, getpgrp());
-            signal(SIGTTIN, SIG_DFL);
-            signal(SIGTTOU, SIG_DFL);
-
             foreground_bool = 0;
             // wait(NULL);
             end_t = time(NULL);
             int total_t = (int)(end_t - start_t);
-
-            if (WIFSTOPPED(status))
-            {
-                task[b_process].id = pid;
-                if (b_process)
-                    task[b_process].num = task[b_process - 1].num + 1;
-                else
-                    task[b_process].num = 1;
-                strcpy(task[b_process++].name, temp_command);
-
-                if (task[b_process - 1].name[strlen(task[b_process - 1].name) - 1] == '\n')
-                    task[b_process - 1].name[strlen(task[b_process - 1].name) - 1] = '\0';
-
-                printf("%s with pid %d stopped\n", task[b_process - 1].name, pid);
-            }
+            // printf("%lf %lld %lld\n", (end_t - start_t), start_t, end_t);
+            // for (int i = 0; i < chunk_num; i++)
+            // {
+            //     free(chunks[i]);
+            // }
+            // free(chunks);
+            // time add
             char time[10];
             if (total_t >= 1)
                 sprintf(time, "took %ds", total_t);
@@ -78,12 +58,8 @@ void execute(char *temp_command, char **chunks, int chunk_num, int type)
         else if (type == BACK)
         {
             task[b_process].id = pid;
-            if (b_process)
-                task[b_process].num = task[b_process - 1].num + 1;
-            else
-                task[b_process].num = 1;
-            strcpy(task[b_process].name, temp_command);
-            printf("[%d] %d\n", task[b_process++].num, pid);
+            strcpy(task[b_process++].name, chunks[0]);
+            printf("[%d] %d\n", b_process, pid);
         }
     }
 }

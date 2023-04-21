@@ -1,48 +1,43 @@
-ls osn/
+discover ~
 
-cd osn/
-
-ls 
-
-ls ASSIGNMENT/
-
-cd ASSIGNMENT/ASSIGNMENT_2/
+python&
 
 ls
 
-cd ASSIGNMENT2/
+ls cd.c
 
-LS
+ls s
 
-ls
-
-cd c
-
-cd commands.
-
-exit
+mkdir chirag
 
 ls
 
+ls chirag
 
-cd e
+cd chirag
 
+touch sdasfsd
+
+ls
 
 cd ..
 
+ls chirag
 
-ls
-
-
-cd ..
-
-
-ls
-
-
-cd science2/
-
+ls -al chirag
 
 exit
+
+sleep 100&
+
+pinfo 37410
+
+sleep  100&
+
+
+pinfo 4753
+
+
+pinfo
 
 
